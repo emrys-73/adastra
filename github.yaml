@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: ftp-transfer-job
+spec:
+    template:
+        spec:
+            containers:
+                - name: ftp-transfer-container
+                  image: microsoft/dotnet:3.1
+                  command: ["powershell", "-File", "C:\path\to\script.ps1"]
+                  env:
+                      - name: EMAIL_TO
+                        value: "you@example.com"
+        - name: EMAIL_FROM
+          value: "notification@example.com"
+        - name: EMAIL_PASSWORD
+          value: "your_email_password"
+        - name: SMTP_SERVER
+          value: "smtp.example.com"
+            restartPolicy: OnFailure
+    schedule: "5 0 * * *"
